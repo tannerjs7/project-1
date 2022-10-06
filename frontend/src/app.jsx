@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Home, PageNotFound, System1 } from './pages'
+import { Home, PageNotFound, System1, System2, System3 } from './pages'
 import { AppNav } from './components/Nav'
 import "./index.css"
 
