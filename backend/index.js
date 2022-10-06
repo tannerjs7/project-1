@@ -10,7 +10,7 @@ app.use(express.json())
 // const pokemonRouter = require('./routes/pokemon.route.js')
 // app.use('/pokemon', pokemonRouter)
 // app.use('/trainers', require('./routes/trainer.route.js'))
-app.use('/warehouse', require('./routes/warehouse.route.js'))
+app.use('/planets', require('./routes/planet.route.js'))
 
 const connectToMongo = async () => {
     try {
