@@ -37,7 +37,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', validateObjectId, async (req, res) => {
     try {
         await updatePlanet(req.params.id, req.body)
         res.send()
@@ -46,7 +46,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', validateObjectId, async (req, res) => {
     try {
         await deletePlanetById(req.params.id)
         res.send()

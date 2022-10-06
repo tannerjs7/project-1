@@ -17,7 +17,7 @@ import { PlanetForm } from '../Form/PlanetForm'
  *      from the list OR refetch data 
  */
 
-const Planet = ({ planet: {name, size, info, isReal, imageUrl} }) => {
+const Planet = ({planet: {name, size, info, isReal, imageUrl}}) => {
 
     // const [isEdit, toggleIsEdit] = useState(false);
 
@@ -30,14 +30,21 @@ const Planet = ({ planet: {name, size, info, isReal, imageUrl} }) => {
             <td className="row-item">{name}</td>
             <td className="row-item">{size}</td>
             <td className="row-item">{info}</td>
-            <td className="row-item">{isReal}</td>
+            <td className="row-item">{isReal ? 'Yes' : 'No'}</td>
             <td className="row-item"><img height="100" src={imageUrl} alt={name} /></td>
         </tr>
     )
 }
 
 export const PlanetList = () => {
+
     const [planetList, setPlanetList] = useState([])
+
+    useEffect(() => {
+        axios.get('http://localhost:9000/planets')
+            .then(res => {setPlanetList(res.data); console.log(res.data)})
+            .catch(err => console.error(err))
+    }, [])
     
     return (
         <>
@@ -48,7 +55,7 @@ export const PlanetList = () => {
                         <th>Name</th>
                         <th>Size</th>
                         <th>Info</th>
-                        <th>Is Real?</th>
+                        <th>Real?</th>
                         <th>Image</th>
                     </tr>
                 </thead>

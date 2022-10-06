@@ -9,7 +9,9 @@ const planetSchema = new Schema({
     },
     size: {
         type: Number,
-        required: true
+        required: true,
+        min: [1, 'A planet must occupy at least 1 unit of space.'],
+        max: [1000, 'A planet can be no larger than 1000 units.']
     },
     info: String,
     isReal: Boolean,
