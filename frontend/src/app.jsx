@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Home, PageNotFound } from './pages'
+import { AppNav } from './components/Nav'
 import "./index.css"
-// import { AppNav } from './components/Nav'
 
 export const App = () => {
     return (
         <BrowserRouter>
-            {/* <AppNav /> */}
+            <AppNav />
             <Routes>
                 <Route path="/" element={<Home />} />
                 <Route path="*" element={<PageNotFound />} />
             </Routes>
-            <footer>Footer!</footer>
+            {/* <footer>Footer!</footer> */}
         </BrowserRouter>
     )
 }
