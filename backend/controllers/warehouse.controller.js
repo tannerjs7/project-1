@@ -14,6 +14,6 @@ const updateWarehouse = async (id, warehouseToUpdate) => {
 
 }
 
-const deleteWarehouseById = async id => await Pokemon.findByIdAndDelete(id)
+const deleteWarehouseById = async id => await Warehouse.findByIdAndDelete(id)
 
 module.exports = { findAllWarehouses, findWarehouseById, createWarehouse, updateWarehouse, deleteWarehouseById }

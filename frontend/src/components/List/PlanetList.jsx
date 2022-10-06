@@ -17,7 +17,7 @@ import { PlanetForm } from '../Form/PlanetForm'
  *      from the list OR refetch data 
  */
 
-const Planet = ({ planet: {name, size, info} }) => {
+const Planet = ({ planet: {name, size, info, isReal, imageUrl} }) => {
 
     // const [isEdit, toggleIsEdit] = useState(false);
 
@@ -37,18 +37,7 @@ const Planet = ({ planet: {name, size, info} }) => {
 }
 
 export const PlanetList = () => {
-
     const [planetList, setPlanetList] = useState([])
-    
-//     useEffect(() => {
-//         // Axios returns a fulfilled promise if the status code is < 400
-//         //    and a rejected promise when >= 400
-
-//         // Move this to store. Get the res.data and use dispatch(setPokemonList(res.data))
-//         axios.get('http://localhost:9000/pokemon')
-//             .then(res => { setPokemonList(res.data); console.log(res.data) })
-//             .catch(err => console.error(err)) // This could easily be to render an error display
-//     }, [])
     
     return (
         <>
@@ -59,6 +48,7 @@ export const PlanetList = () => {
                         <th>Name</th>
                         <th>Size</th>
                         <th>Info</th>
+                        <th>Is Real?</th>
                         <th>Image</th>
                     </tr>
                 </thead>

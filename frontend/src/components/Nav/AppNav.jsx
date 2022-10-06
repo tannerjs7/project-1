@@ -8,16 +8,10 @@ export const AppNav = () => {
                 <NavItem>
                     <Link to="/" className="nav-link">Home</Link>
                 </NavItem>
-                <NavItem>
-                    <Link to="/about" className="nav-link">About</Link>
-                </NavItem>
-                <NavItem>
-                    <Link to="/contact" className="nav-link">Contact Us</Link>
-                </NavItem>
             </NavSection>
             <NavSection className="reverse-nav-section" style={{color: 'blue'}}>
                 <NavItem>
-                    <Link to="/og" className="nav-link">Original Demo</Link>
+                    <Link to="/system1" className="nav-link">System 1</Link>
                 </NavItem>
             </NavSection>
         </Nav>
