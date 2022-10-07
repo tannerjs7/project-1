@@ -6,11 +6,8 @@ require('dotenv').config()
 const app = express()
 app.use(cors())
 app.use(express.json())
-
-// const pokemonRouter = require('./routes/pokemon.route.js')
-// app.use('/pokemon', pokemonRouter)
-// app.use('/trainers', require('./routes/trainer.route.js'))
 app.use('/planets', require('./routes/planet.route.js'))
+app.use('/systems', require('./routes/system.route.js'))
 
 const connectToMongo = async () => {
     try {
