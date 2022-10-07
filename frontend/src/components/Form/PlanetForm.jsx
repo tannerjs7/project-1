@@ -1,18 +1,18 @@
 import axios from 'axios'
 import { useState } from 'react'
 
-const ourPlanets = [
-    <option>Please Select a Planet</option>,
-    <option>Mercury</option>,
-    <option>Venus</option>,
-    <option>Earth</option>,
-    <option>Mars</option>,
-    <option>Jupiter</option>,
-    <option>Saturn</option>,
-    <option>Uranus</option>,
-    <option>Neptune</option>,
-    <option>Pluto</option>,
-]
+// const ourPlanets = [
+//     <option>Please Select a Planet</option>,
+//     <option>Mercury</option>,
+//     <option>Venus</option>,
+//     <option>Earth</option>,
+//     <option>Mars</option>,
+//     <option>Jupiter</option>,
+//     <option>Saturn</option>,
+//     <option>Uranus</option>,
+//     <option>Neptune</option>,
+//     <option>Pluto</option>,
+// ]
 
 export const PlanetForm = ({setPlanetList}) => {
 
@@ -35,15 +35,10 @@ export const PlanetForm = ({setPlanetList}) => {
     }
 
     const handleSubmit = async (event) => {
-        
         event.preventDefault() // Prevents page from refreshing
-        // console.log(planetData)
         try {
             const res = await axios.post('http://localhost:9000/planets', {...planetData})
-            // console.log('NEW PLANET!!')
-            // console.log(res.data)
-
-            setPlanetList(planetList => [...planetList, res.data])
+            setPlanetList(p => [...p, res.data])
             event.target.reset()
             handleClear()
         } catch (err) {

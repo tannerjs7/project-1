@@ -10,8 +10,8 @@ const systemSchema = new Schema({
         type: [{
             type: mongoose.Types.ObjectId,
             ref: 'Planet'
-        }]
-        // validate: [planets.reduce((currSum, planet.size) => currSum + planet.size) <= 1000, 'System maximum capacity is 1000 units.']
+        }],
+        validate: [planets => planets.length >= 1 && planets.length <= 10, 'System maximum capacity is 10 planets.']
     }
 })
 
