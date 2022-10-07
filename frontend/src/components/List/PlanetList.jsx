@@ -13,37 +13,37 @@ import { PlanetForm } from '../Form/PlanetForm'
  * 
  * DELETE:
  *      Add a delete button to the table row and clicking on it extracts the _id from the pokemon object
- *      and shoots off a DELETE http request using axios. From there, manually the remove the pokemon
+ *      and shoots off a DELETE http request using axios. From there, manually remove the pokemon
  *      from the list OR refetch data 
  */
 
 // const deletePlanet = async _id => await axios.delete(`http://localhost:9000/planets/${_id}`)
 
-const Planet = ({planet: {name, size, info, isReal, imageUrl, _id}}) => {
+// const Planet = ({planet: {name, size, info, isReal, imageUrl, _id}}) => {
 
-    // const [isEdit, toggleIsEdit] = useState(false);
+//     // const [isEdit, toggleIsEdit] = useState(false);
 
-    // This would be altered row that's in edit mode
-    // if (isEdit) {
-    //     return (<></>)
-    // }
+//     // This would be altered row that's in edit mode
+//     // if (isEdit) {
+//     //     return (<></>)
+//     // }
 
-    const deletePlanet = async _id => {
-        await axios.delete(`http://localhost:9000/planets/${_id}`)
-        // window.location.reload()
-    }
+//     const deletePlanet = async _id => {
+//         await axios.delete(`http://localhost:9000/planets/${_id}`)
+//         // window.location.reload()
+//     }
 
-    return (
-        <tr>
-            <td className="row-item">{name}</td>
-            <td className="row-item">{size}</td>
-            <td className="row-item">{info}</td>
-            <td className="row-item">{isReal ? 'Yes' : 'No'}</td>
-            <td className="row-item"><img height="100" src={imageUrl} alt={name} /></td>
-            <td className="row-item"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
-        </tr>
-    )
-}
+//     return (
+//         <tr>
+//             <td className="row-item">{name}</td>
+//             <td className="row-item">{size}</td>
+//             <td className="row-item">{info}</td>
+//             <td className="row-item">{isReal ? 'Yes' : 'No'}</td>
+//             <td className="row-item"><img height="100" src={imageUrl} alt={name} /></td>
+//             <td className="row-item"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
+//         </tr>
+//     )
+// }
 
 export const PlanetList = () => {
 
@@ -54,6 +54,30 @@ export const PlanetList = () => {
             .then(res => setPlanetList(res.data))
             .catch(err => console.error(err))
     }, [])
+
+    const Planet = ({planet: {name, size, info, isReal, imageUrl, _id}}) => {
+
+        const deletePlanet = async id => {
+            setPlanetList(current => 
+                current.filter(planetList => planetList._id !== id
+                )
+            )
+            await axios.delete(`http://localhost:9000/planets/${id}`)
+            const [a, b] = {}
+            setPlanetList(planetList => [...planetList])
+        }
+    
+        return (
+            <tr>
+                <td className="row-item">{name}</td>
+                <td className="row-item">{size}</td>
+                <td className="row-item">{info}</td>
+                <td className="row-item">{isReal ? 'Yes' : 'No'}</td>
+                <td className="row-item"><img height="100" src={imageUrl} alt={name} /></td>
+                <td className="row-item"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
+            </tr>
+        )
+    }
     
     return (
         <>

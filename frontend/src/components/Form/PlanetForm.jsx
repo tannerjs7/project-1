@@ -35,6 +35,7 @@ export const PlanetForm = ({setPlanetList}) => {
     }
 
     const handleSubmit = async (event) => {
+        
         event.preventDefault() // Prevents page from refreshing
         // console.log(planetData)
         try {

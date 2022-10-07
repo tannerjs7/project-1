@@ -4,12 +4,10 @@ import { Nav, NavItem, NavSection } from './index.js'
 export const AppNav = () => {
     return (
         <Nav>
-            <NavSection onClick={() => console.log('Hello Nav!')}>
+            <NavSection>
                 <NavItem>
                     <Link to="/" className="nav-link">Home</Link>
                 </NavItem>
-            </NavSection>
-            <NavSection className="reverse-nav-section" style={{color: 'blue'}}>
                 <NavItem>
                     <Link to="/systems/1" className="nav-link">System 1</Link>
                 </NavItem>
