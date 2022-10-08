@@ -1,6 +1,6 @@
-export const NavSection = ({children, className, ...props}) => {
+export const NavSection = ({children, ...props}) => {
     return (
-        <section className={className ?? 'nav-section'} {...props}>
+        <section className='nav-section' {...props}>
             {children}
         </section>
     )

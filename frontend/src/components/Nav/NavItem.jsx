@@ -1,6 +1,6 @@
-export const NavItem = ({children, className}) => {
+export const NavItem = ({children}) => {
     return (
-        <div className={className ?? 'nav-item'}>
+        <div className='nav-item'>
             {children}
         </div>
     )

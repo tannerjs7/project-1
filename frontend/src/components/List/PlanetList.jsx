@@ -17,34 +17,6 @@ import { PlanetForm } from '../Form/PlanetForm'
  *      from the list OR refetch data 
  */
 
-// const deletePlanet = async _id => await axios.delete(`http://localhost:9000/planets/${_id}`)
-
-// const Planet = ({planet: {name, size, info, isReal, imageUrl, _id}}) => {
-
-//     // const [isEdit, toggleIsEdit] = useState(false);
-
-//     // This would be altered row that's in edit mode
-//     // if (isEdit) {
-//     //     return (<></>)
-//     // }
-
-//     const deletePlanet = async _id => {
-//         await axios.delete(`http://localhost:9000/planets/${_id}`)
-//         // window.location.reload()
-//     }
-
-//     return (
-//         <tr>
-//             <td className="row-item">{name}</td>
-//             <td className="row-item">{size}</td>
-//             <td className="row-item">{info}</td>
-//             <td className="row-item">{isReal ? 'Yes' : 'No'}</td>
-//             <td className="row-item"><img height="100" src={imageUrl} alt={name} /></td>
-//             <td className="row-item"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
-//         </tr>
-//     )
-// }
-
 export const PlanetList = () => {
 
     const [planetList, setPlanetList] = useState([])
@@ -74,62 +46,68 @@ export const PlanetList = () => {
         }
 
         const handleSubmit = async id => {
-            setPlanetList(current => 
-                current.map(p => p._id === id ? {...planetData} : p)
-            )
             const res = await axios.put(`http://localhost:9000/planets/${id}`, {...planetData})
+            setPlanetList(current =>
+                current.map(p => p === res.data ? {...planetData} : {...p})
+            )
+
+            
+            // setPlanetList(p => [res.data, ...p])
         }
     
         if (!isEdit) {
             return (
                 <tr>
-                    <td className="row-item">{name}</td>
-                    <td className="row-item">{size}</td>
-                    <td className="row-item">{info}</td>
-                    <td className="row-item">{isReal ? 'Yes' : 'No'}</td>
-                    <td className="row-item"><img height="100" src={imageUrl} alt={name} /></td>
-                    <td className="row-item"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
-                    <td className="row-item"><button onClick={() => toggleIsEdit(!isEdit)}>Edit</button></td>
+                    <td className="row-item" id="name-view">{name}</td>
+                    <td className="row-item" id="size-view">{size}</td>
+                    <td className="row-item" id="info-view">{info}</td>
+                    <td className="row-item" id="isReal-view">{isReal ? 'Yes' : 'No'}</td>
+                    <td className="row-item" id="imageUrl-view"><img height="100" src={imageUrl} alt={name} /></td>
+                    <td className="row-item" id="delete-button"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
+                    <td className="row-item" id="edit-button"><button onClick={() => toggleIsEdit(!isEdit)}>Edit</button></td>
                 </tr>
             )
         } else {
             return (
                 <tr>
-                    <td className="row-item">
+                    <td className="row-item" id="name-edit">
                         <input
+                            id="name-input"
                             value={planetData.planetName}
-                            size="10"
                             onChange={e => setPlanetData({...planetData, planetName: e.target.value})}
                         />
                     </td>
-                    <td className="row-item">
+                    <td className="row-item" id="size-edit">
                         <input
+                            id="size-input"
                             type="number"
                             value={planetData.planetSize}
                             onChange={e => setPlanetData({...planetData, planetSize: e.target.value})}
                         />
                     </td>
-                    <td className="row-item">
+                    <td className="row-item" id="info-edit">
                         <input
+                            id="info-input"
                             value={planetData.planetInfo}
                             onChange={e => setPlanetData({...planetData, planetInfo: e.target.value})}
                         />
                     </td>
-                    <td className="row-item">
+                    <td className="row-item" id="isReal-edit">
                         <input
                             type="checkbox"
                             checked={planetData.planetIsReal}
                             onChange={e => setPlanetData({...planetData, planetIsReal: e.target.value})}
                         />
                     </td>
-                    <td className="row-item">
+                    <td className="row-item" id="imageUrl-edit">
                         <input
+                            id="imageUrl-input"
                             value={planetData.planetImageUrl}
                             onChange={e => setPlanetData({...planetData, planetImageUrl: e.target.value})}
                         />
                     </td>
-                    <td className="row-item"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
-                    <td className="row-item"><button onClick={() => {toggleIsEdit(!isEdit); handleSubmit(_id)}}>Submit</button></td>
+                    <td className="row-item" id="delete-button"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
+                    <td className="row-item" id="edit-button"><button onClick={() => {toggleIsEdit(!isEdit); handleSubmit(_id)}}>Submit</button></td>
                 </tr>
             )
         }
@@ -137,7 +115,9 @@ export const PlanetList = () => {
     
     return (
         <>
+            <br/>
             <PlanetForm setPlanetList={setPlanetList} />
+            <br/>
             <table>
                 <thead>
                     <tr>

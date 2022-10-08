@@ -15,7 +15,8 @@ const planetSchema = new Schema({
     },
     info: String,
     isReal: Boolean,
-    imageUrl: String
+    imageUrl: String,
+    system: Number
 })
 
 const Planet = mongoose.model('Planet', planetSchema, 'Planets')
