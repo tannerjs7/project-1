@@ -80,7 +80,8 @@ export const PlanetForm = ({setPlanetList}) => {
                 <label htmlFor="is-real">Is it a Real Planet? </label>
                 <input id="is-real"
                     type="checkbox"
-                    onChange={() => setPlanetData({...planetData, isReal: !planetData.isReal})} />
+                    onChange={() => setPlanetData({...planetData, isReal: !planetData.isReal})}
+                />
             </div>
             <div>
                 <label htmlFor="image-url">Image URL: </label>

@@ -41,7 +41,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
     try {
         await updatePlanet(req.params.id, req.body)
         res.send()
-    } catch {
+    } catch (err) {
         res.status(err?.status ?? 500).json(err)
     }
 })

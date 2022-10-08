@@ -24,18 +24,19 @@ export const PlanetList = () => {
 
     useEffect(() => {
         axios.get('http://localhost:9000/planets')
-            .then(res => setPlanetList(res.data))
+            .then(res => {console.log(res.data); setPlanetList(res.data)})
             .catch(err => console.error(err))
     }, [])
 
     const Planet = ({planet: {name, size, info, isReal, imageUrl, _id}}) => {
 
         const [planetData, setPlanetData] = useState({
-            planetName: name,
-            planetSize: size,
-            planetInfo: info,
-            planetIsReal: isReal,
-            planetImageUrl: imageUrl
+            _id: _id,
+            name: name,
+            size: size,
+            info: info,
+            isReal: isReal,
+            imageUrl: imageUrl
         })
 
         const deletePlanet = async id => {
@@ -46,15 +47,13 @@ export const PlanetList = () => {
         }
 
         const handleSubmit = async id => {
-            const res = await axios.put(`http://localhost:9000/planets/${id}`, {...planetData})
+            console.log(planetList)
             setPlanetList(current =>
-                current.map(p => p === res.data ? {...planetData} : {...p})
+                current.map(p => p._id === id ? {...planetData} : {...p})
             )
-
-            
-            // setPlanetList(p => [res.data, ...p])
+            await axios.put(`http://localhost:9000/planets/${id}`, {...planetData})
         }
-    
+
         if (!isEdit) {
             return (
                 <tr>
@@ -73,37 +72,37 @@ export const PlanetList = () => {
                     <td className="row-item" id="name-edit">
                         <input
                             id="name-input"
-                            value={planetData.planetName}
-                            onChange={e => setPlanetData({...planetData, planetName: e.target.value})}
+                            value={planetData.name}
+                            onChange={e => setPlanetData({...planetData, name: e.target.value})}
                         />
                     </td>
                     <td className="row-item" id="size-edit">
                         <input
                             id="size-input"
                             type="number"
-                            value={planetData.planetSize}
-                            onChange={e => setPlanetData({...planetData, planetSize: e.target.value})}
+                            value={planetData.size}
+                            onChange={e => setPlanetData({...planetData, size: e.target.value})}
                         />
                     </td>
                     <td className="row-item" id="info-edit">
                         <input
                             id="info-input"
-                            value={planetData.planetInfo}
-                            onChange={e => setPlanetData({...planetData, planetInfo: e.target.value})}
+                            value={planetData.info}
+                            onChange={e => setPlanetData({...planetData, info: e.target.value})}
                         />
                     </td>
                     <td className="row-item" id="isReal-edit">
                         <input
                             type="checkbox"
-                            checked={planetData.planetIsReal}
-                            onChange={e => setPlanetData({...planetData, planetIsReal: e.target.value})}
+                            checked={planetData.isReal}
+                            onChange={() => setPlanetData({...planetData, isReal: !planetData.isReal})}
                         />
                     </td>
                     <td className="row-item" id="imageUrl-edit">
                         <input
                             id="imageUrl-input"
-                            value={planetData.planetImageUrl}
-                            onChange={e => setPlanetData({...planetData, planetImageUrl: e.target.value})}
+                            value={planetData.imageUrl}
+                            onChange={e => setPlanetData({...planetData, imageUrl: e.target.value})}
                         />
                     </td>
                     <td className="row-item" id="delete-button"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
