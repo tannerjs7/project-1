@@ -11,20 +11,20 @@ const validateObjectId = (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
-    const system = await findAllSystems()
-    res.json(system)
+    try {
+        const systems = await findAllSystems()
+        res.json(systems)
+    } catch (err) {
+        res.status(err?.status ?? 500).json(err)
+    }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
     try {
-        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            throw {status: 204, msg: 'No system found'}
-        }
         const system = await findSystemById(req.params.id)
         res.json(system)
     } catch (err) {
-        console.log(err)
-        res.status(err?.status).json(err)
+        res.status(err?.status ?? 500).json(err)
     }
 })
 

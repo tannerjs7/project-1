@@ -8,6 +8,7 @@ const findSystemById = async id => {
         if (system == null) {
             throw {status: 204, msg: `No system with the id ${id} was found.`}
         }
+        return system
     } catch (err) {
         throw err
     }

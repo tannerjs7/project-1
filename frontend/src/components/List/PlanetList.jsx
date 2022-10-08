@@ -2,29 +2,14 @@ import { useState, useEffect, } from 'react'
 import axios from 'axios'
 import { PlanetForm } from '../Form/PlanetForm'
 
-/**
- * For UPDATE AND DELETE operations:
- * 
- * PUT: 
- *      Have two modes to your table row, update mode and not updating (isEdit) state
- *      Use conditional rendering to render the table as normal if !isEdit
- *      If isEdit is true, instead, display an altered table where each data is an input
- *      Or create a form/modal that updates a given pokemon when you click on the edit button
- * 
- * DELETE:
- *      Add a delete button to the table row and clicking on it extracts the _id from the pokemon object
- *      and shoots off a DELETE http request using axios. From there, manually remove the pokemon
- *      from the list OR refetch data 
- */
-
-export const PlanetList = () => {
+export const PlanetList = systemId => {
 
     const [planetList, setPlanetList] = useState([])
     const [isEdit, toggleIsEdit] = useState(false)
 
-    useEffect(() => {
-        axios.get('http://localhost:9000/planets')
-            .then(res => {console.log(res.data); setPlanetList(res.data)})
+    useEffect(systemId => {
+        axios.get(`http://localhost:9000/systems`)
+            .then(res => setPlanetList(res.data[0]))
             .catch(err => console.error(err))
     }, [])
 

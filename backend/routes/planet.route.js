@@ -11,20 +11,20 @@ const validateObjectId = (req, res, next) => {
 }
 
 router.get('/', async (req, res) => {
-    const planet = await findAllPlanets()
-    res.json(planet)
+    try {
+        const planets = await findAllPlanets()
+        res.json(planets)
+    } catch (err) {
+        res.status(err?.status ?? 500).json(err)
+    }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', validateObjectId, async (req, res) => {
     try {
-        if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-            throw {status: 204, msg: 'No planet found'}
-        }
         const planet = await findPlanetById(req.params.id)
         res.json(planet)
     } catch (err) {
-        console.log(err)
-        res.status(err?.status).json(err)
+        res.status(err?.status ?? 500).json(err)
     }
 })
 

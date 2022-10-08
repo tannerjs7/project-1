@@ -8,6 +8,7 @@ const findPlanetById = async id => {
         if (planet == null) {
             throw {status: 204, msg: `No planet with the id ${id} was found.`}
         }
+        return planet
     } catch (err) {
         throw err
     }
