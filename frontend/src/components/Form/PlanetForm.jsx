@@ -1,19 +1,6 @@
 import axios from 'axios'
 import { useState } from 'react'
 
-// const ourPlanets = [
-//     <option>Please Select a Planet</option>,
-//     <option>Mercury</option>,
-//     <option>Venus</option>,
-//     <option>Earth</option>,
-//     <option>Mars</option>,
-//     <option>Jupiter</option>,
-//     <option>Saturn</option>,
-//     <option>Uranus</option>,
-//     <option>Neptune</option>,
-//     <option>Pluto</option>,
-// ]
-
 export const PlanetForm = ({setPlanetList}) => {
 
     const [planetData, setPlanetData] = useState({

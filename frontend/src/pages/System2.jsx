@@ -4,7 +4,7 @@ import { PlanetList } from "../components/List/PlanetList"
 export const System2 = () => {
     return (
         <>
-            <PlanetList />
+            <PlanetList systemId="6342078cf308ab9557918936"/>
         </>
     )
 }

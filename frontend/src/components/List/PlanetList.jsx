@@ -2,21 +2,30 @@ import { useState, useEffect, } from 'react'
 import axios from 'axios'
 import { PlanetForm } from '../Form/PlanetForm'
 
-export const PlanetList = systemId => {
+export const PlanetList = ({systemId}) => {
 
     const [planetList, setPlanetList] = useState([])
     const [isEdit, toggleIsEdit] = useState(false)
+    const [systemPlanets, setSystemPlanets] = useState([])
 
-    useEffect(systemId => {
-        axios.get(`http://localhost:9000/systems`)
-            .then(res => setPlanetList(res.data[0]))
+    useEffect(() => {
+        axios.get(`http://localhost:9000/systems/${systemId}`)
+            .then(res => setSystemPlanets(res.data.planets))
             .catch(err => console.error(err))
-    }, [])
+    }, [systemId])
 
-    const Planet = ({planet: {name, size, info, isReal, imageUrl, _id}}) => {
+    useEffect(() => {
+        systemPlanets.forEach(current =>
+            axios.get(`http://localhost:9000/planets/${current}`)
+                .then(res2 => setPlanetList(p => [...p, res2.data]))
+                .catch(err => console.error(err))
+        )
+    }, [systemPlanets])
+
+    const Planet = ({planet: {name, size, info, isReal, imageUrl, _id: id}}) => {
 
         const [planetData, setPlanetData] = useState({
-            _id: _id,
+            id: id,
             name: name,
             size: size,
             info: info,
@@ -24,19 +33,18 @@ export const PlanetList = systemId => {
             imageUrl: imageUrl
         })
 
-        const deletePlanet = async id => {
-            setPlanetList(current => 
-                current.filter(p => p._id !== id)
-            )
-            await axios.delete(`http://localhost:9000/planets/${id}`)
+        const deletePlanet = async planetId => {
+            setPlanetList(current => current.filter(p => p.id !== planetId))
+            await axios.delete(`http://localhost:9000/planets/${planetId}`)
+            setSystemPlanets(current => current.filter(p => p !== planetId))
+            await axios.put(`http://localhost:9000/systems/${systemId}`, {planets: systemPlanets})
         }
 
-        const handleSubmit = async id => {
-            console.log(planetList)
+        const editPlanet = async planetId => {
+            await axios.put(`http://localhost:9000/planets/${planetId}`, {...planetData})
             setPlanetList(current =>
-                current.map(p => p._id === id ? {...planetData} : {...p})
+                current.map(p => p.id === planetId ? {...planetData} : {...p})
             )
-            await axios.put(`http://localhost:9000/planets/${id}`, {...planetData})
         }
 
         if (!isEdit) {
@@ -47,7 +55,7 @@ export const PlanetList = systemId => {
                     <td className="row-item" id="info-view">{info}</td>
                     <td className="row-item" id="isReal-view">{isReal ? 'Yes' : 'No'}</td>
                     <td className="row-item" id="imageUrl-view"><img height="100" src={imageUrl} alt={name} /></td>
-                    <td className="row-item" id="delete-button"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
+                    <td className="row-item" id="delete-button"><button onClick={() => deletePlanet(id)}>Delete</button></td>
                     <td className="row-item" id="edit-button"><button onClick={() => toggleIsEdit(!isEdit)}>Edit</button></td>
                 </tr>
             )
@@ -90,8 +98,8 @@ export const PlanetList = systemId => {
                             onChange={e => setPlanetData({...planetData, imageUrl: e.target.value})}
                         />
                     </td>
-                    <td className="row-item" id="delete-button"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
-                    <td className="row-item" id="edit-button"><button onClick={() => {toggleIsEdit(!isEdit); handleSubmit(_id)}}>Submit</button></td>
+                    <td className="row-item" id="delete-button"><button onClick={() => deletePlanet(id)}>Delete</button></td>
+                    <td className="row-item" id="edit-button"><button onClick={() => {toggleIsEdit(!isEdit); editPlanet(id)}}>Submit</button></td>
                 </tr>
             )
         }
@@ -115,7 +123,7 @@ export const PlanetList = systemId => {
                     </tr>
                 </thead>
                 <tbody>
-                    {planetList.map(planet => <Planet key={planet._id} planet={planet} />)}
+                    {planetList.map(planet => <Planet key={planet.id} planet={planet} />)}
                 </tbody>
             </table>
         </>
