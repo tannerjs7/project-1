@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 
-export const PlanetForm = ({setPlanetList}) => {
+export const PlanetForm = (props) => {
 
     const [planetData, setPlanetData] = useState({
         name: '',
@@ -18,14 +18,16 @@ export const PlanetForm = ({setPlanetList}) => {
             info: null,
             isReal: false,
             imageUrl: null
-        });
+        })
     }
 
     const handleSubmit = async event => {
         event.preventDefault() // Prevents page from refreshing
         try {
-            const res = await axios.post('http://localhost:9000/planets', {...planetData})
-            setPlanetList(p => [...p, res.data])
+            if (props.planetList.length < 10) {
+                const res = await axios.post('http://localhost:9000/planets', {...planetData, system: props.systemNum})
+                props.setPlanetList(p => [...p, res.data])
+            }
             event.target.reset()
             handleClear()
         } catch (err) {
@@ -39,7 +41,7 @@ export const PlanetForm = ({setPlanetList}) => {
                 <u>Planet Submission Form:</u>
             </div>
             <div>
-                <label htmlFor="planet-name">Planet Name: </label>
+                <label htmlFor="planet-name">Name (Required): </label>
                 <input 
                     id="planet-name"
                     value={planetData.name}
@@ -47,7 +49,7 @@ export const PlanetForm = ({setPlanetList}) => {
                 />
             </div>
             <div>
-                <label htmlFor="planet-size">Planet Size: </label>
+                <label htmlFor="planet-size">Size (Required): </label>
                 <input 
                     id="planet-size"
                     type="number"
@@ -56,7 +58,7 @@ export const PlanetForm = ({setPlanetList}) => {
                 />
             </div>
             <div>
-                <label htmlFor="planet-info">Description: </label>
+                <label htmlFor="planet-info">Information: </label>
                 <input 
                     id="planet-info"
                     value={planetData.info}
@@ -76,8 +78,8 @@ export const PlanetForm = ({setPlanetList}) => {
                     value={planetData.imageUrl}
                     onChange={e => setPlanetData({...planetData, imageUrl: e.target.value})}/>
             </div>
-            <button type="reset" onClick={handleClear}>Clear</button>
-            <button>Submit</button>
+            <button className="form-button" id="for"type="reset" onClick={handleClear}>Clear</button>
+            <button className="form-button">Submit</button>
         </form>
     )
 }

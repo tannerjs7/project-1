@@ -6,6 +6,9 @@ export const AppNav = () => {
         <Nav>
             <NavSection>
                 <NavItem>
+                    <Link to="/" className="nav-link">Home</Link>
+                </NavItem>
+                <NavItem>
                     <Link to="/systems/1" className="nav-link">System 1</Link>
                 </NavItem>
                 <NavItem>

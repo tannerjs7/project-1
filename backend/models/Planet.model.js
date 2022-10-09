@@ -5,7 +5,6 @@ const planetSchema = new Schema({
     name: {
         type: String,
         required: true,
-        // enum: ['pluto', 'mercury', 'mars', 'venus', 'earth']
     },
     size: {
         type: Number,
@@ -15,7 +14,8 @@ const planetSchema = new Schema({
     },
     info: String,
     isReal: Boolean,
-    imageUrl: String
+    imageUrl: String,
+    system: String
 })
 
 const Planet = mongoose.model('Planet', planetSchema, 'Planets')

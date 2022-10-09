@@ -10,11 +10,21 @@ body {
 }
 
 input[type="number"] {
-	width: 50px;
+	width: 100px;
 }
 
 img {
 	max-width: 200px;
+}
+
+#system-capacity {
+  text-align: center;
+  font-size: 40px;
+  border: 2px solid black;
+}
+
+h1 {
+  width: 100%
 }
 
 /* Form */
@@ -28,10 +38,20 @@ img {
 }
 
 .planet-form > div > input {
+  size: 200px;
 	font-size: 25px;
 }
 
 #planet-submission {
+  font-size: 50px;
+}
+
+.form-button {
+  font-size: 30px;
+  margin: 10px;
+}
+
+#at-capacity {
   font-size: 50px;
 }
 
