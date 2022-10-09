@@ -1,6 +1,8 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 
+/* General */
+
 body {
   background-color: #3e94ec;
   font-family: "Roboto", helvetica, arial, sans-serif;
@@ -19,18 +21,33 @@ img {
 
 #system-capacity {
   text-align: center;
-  font-size: 40px;
+  font-size: 70px;
   border: 2px solid black;
+  margin: 5px 0px;
 }
 
 h1 {
-  width: 100%
+  font-size: 70px;
+}
+
+h2 {
+  font-size: 50px;
+}
+
+button:hover {
+  background-color: darkgray;
+}
+
+button:active {
+  background-color: black;
 }
 
 /* Form */
 
 .planet-form {
   border: 1px dashed black;
+  padding: 5px;
+  margin: 5px 0px;
 }
 
 .planet-form > div {
@@ -55,7 +72,12 @@ h1 {
   font-size: 50px;
 }
 
-/** Table **/
+input.check {
+  height: 25px;
+  width: 25px;
+}
+
+/* Table */
 
 div.table-title {
   display: block;
@@ -257,7 +279,11 @@ td.text-right {
   width: 100%;
 }
 
-/** Navbar **/
+td > button {
+  font-size: 22px;
+}
+
+/* Navbar */
 
 .navbar {
   background-color: black;

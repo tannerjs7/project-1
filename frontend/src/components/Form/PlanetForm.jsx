@@ -3,31 +3,38 @@ import { useState } from 'react'
 
 export const PlanetForm = (props) => {
 
+    /**
+     * Set up state for planet data.
+     * Name and size are required, with size being between 1 and 1000.
+     */
     const [planetData, setPlanetData] = useState({
         name: '',
-        size: 0,
+        size: 1,
         info: null,
         isReal: false,
         imageUrl: null
     })
 
+    /**
+     * Clear form data.
+     * Called when clear or submit button is clicked.
+     */
     const handleClear = () => {
         setPlanetData({
             name: '',
-            size: 0,
+            size: 1,
             info: null,
             isReal: false,
             imageUrl: null
         })
     }
 
+    // Submit new planet and clear form.
     const handleSubmit = async event => {
         event.preventDefault() // Prevents page from refreshing
         try {
-            if (props.planetList.length < 10) {
-                const res = await axios.post('http://localhost:9000/planets', {...planetData, system: props.systemNum})
-                props.setPlanetList(p => [...p, res.data])
-            }
+            const res = await axios.post('http://localhost:9000/planets', {...planetData, system: props.systemNum})
+            props.setPlanetList(p => [...p, res.data])
             event.target.reset()
             handleClear()
         } catch (err) {
@@ -35,6 +42,7 @@ export const PlanetForm = (props) => {
         }
     }
 
+    // Planet submission form.
     return (
         <form onSubmit={handleSubmit} className="planet-form">
             <div id="planet-submission">
@@ -49,7 +57,7 @@ export const PlanetForm = (props) => {
                 />
             </div>
             <div>
-                <label htmlFor="planet-size">Size (Required): </label>
+                <label htmlFor="planet-size">Size (1 - 1000): </label>
                 <input 
                     id="planet-size"
                     type="number"
@@ -61,20 +69,25 @@ export const PlanetForm = (props) => {
                 <label htmlFor="planet-info">Information: </label>
                 <input 
                     id="planet-info"
+                    size="50"
                     value={planetData.info}
                     onChange={e => setPlanetData({...planetData, info: e.target.value})}
                 />
             </div>
             <div>
                 <label htmlFor="is-real">Is it a Real Planet? </label>
-                <input id="is-real"
+                <input
+                    class="check"
+                    id="is-real"
                     type="checkbox"
                     onChange={() => setPlanetData({...planetData, isReal: !planetData.isReal})}
                 />
             </div>
             <div>
                 <label htmlFor="image-url">Image URL: </label>
-                <input id="image-url"
+                <input
+                    id="image-url"
+                    size="50"
                     value={planetData.imageUrl}
                     onChange={e => setPlanetData({...planetData, imageUrl: e.target.value})}/>
             </div>

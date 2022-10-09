@@ -19,8 +19,10 @@ const connectToMongo = async () => {
     }
 }
 
+// Connect to MongoDB using URI in .env
 connectToMongo()
 
+// .env designates port 9000 to be used, but port 8080 is a backup.
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Listening on port ${process.env.PORT || 8080}`)
 })

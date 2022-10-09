@@ -1,5 +1,7 @@
 const Planet = require('../models/Planet.model.js')
 
+// Use Mongoose and Planet.model.js to create functions for use in planet.route.js.
+
 const findAllPlanets = async () => await Planet.find()
 
 const findPlanetById = async id => {

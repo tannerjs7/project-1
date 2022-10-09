@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { Nav, NavItem, NavSection } from './index.js'
 
+// Links to the home page and each of the system pages.
 export const AppNav = () => {
     return (
         <Nav>

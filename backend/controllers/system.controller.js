@@ -1,5 +1,7 @@
 const System = require('../models/System.model.js')
 
+// Use Mongoose and System.model.js to create functions for use in system.route.js.
+
 const findAllSystems = async () => await System.find()
 
 const findSystemById = async id => {

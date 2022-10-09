@@ -1,12 +1,17 @@
-import { useState, useEffect, } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { PlanetForm } from '../Form/PlanetForm'
 
 export const PlanetList = ({systemNum}) => {
 
+    // Set up state for the list of planets and edit mode.
     const [planetList, setPlanetList] = useState([])
     const [isEdit, toggleIsEdit] = useState(false)
 
+    /** 
+    * Populate planet list with data from the database.
+    * systemNum never changes so only runs on mount.
+    */
     useEffect(() => {
         axios.get(`http://localhost:9000/planets`)
             .then(res => setPlanetList(res.data.filter(p => p.system === systemNum)))
@@ -15,6 +20,7 @@ export const PlanetList = ({systemNum}) => {
 
     const Planet = ({planet: {name, size, info, isReal, imageUrl, _id}}) => {
 
+        // Set up state for planet data
         const [planetData, setPlanetData] = useState({
             id: _id,
             name: name,
@@ -24,16 +30,27 @@ export const PlanetList = ({systemNum}) => {
             imageUrl: imageUrl
         })
 
+        // Remove the planet from state and the database
         const deletePlanet = async planetId => {
-            setPlanetList(current => current.filter(p => p._id !== planetId))
-            await axios.delete(`http://localhost:9000/planets/${planetId}`)
+            try {
+                await axios.delete(`http://localhost:9000/planets/${planetId}`)
+                setPlanetList(current => current.filter(p => p._id !== planetId))
+            } catch (err) {
+                console.error(err)
+            }
         }
 
+        // Update the planet in state and in the database.
         const editPlanet = async planetId => {
-            setPlanetList(current => current.map(p => p._id === planetId ? {...planetData} : {...p}))
-            await axios.put(`http://localhost:9000/planets/${planetId}`, {...planetData})
+            try {
+                await axios.put(`http://localhost:9000/planets/${planetId}`, {...planetData})
+                setPlanetList(current => current.map(p => p._id === planetId ? {...planetData} : {...p}))
+            } catch (err) {
+                console.error(err)
+            }
         }
 
+        // View only mode.
         if (!isEdit) {
             return (
                 <tr>
@@ -47,6 +64,7 @@ export const PlanetList = ({systemNum}) => {
                 </tr>
             )
         } else {
+            // Edit mode.
             return (
                 <tr>
                     <td className="row-item" id="name-edit">
@@ -94,12 +112,14 @@ export const PlanetList = ({systemNum}) => {
 
     return (
         <>
-            <br/>
-            <div id="system-capacity">System Capacity: {planetList.length} / 10</div>
-            <br/>
-            {planetList.length >= 10 ? <div id="at-capacity">This system is at capacity. Remove one or more planets in order to add.</div> :
+            {/* Display system name and capacity. */}
+            <div id="system-capacity">System {systemNum} Capacity: {planetList.length} / 10</div>
+
+            {/* Show data entry form only if the system isn't full. */}
+            {planetList.length >= 10 ? <div id="at-capacity">This system is at capacity. Remove one or more planets in order to add more.</div> :
                 <PlanetForm setPlanetList={setPlanetList} planetList={planetList} systemNum={`${systemNum}`}/>}
-            <br/>
+
+            {/* Planet data table. */}
             <table>
                 <thead>
                     <tr>
@@ -113,6 +133,7 @@ export const PlanetList = ({systemNum}) => {
                     </tr>
                 </thead>
                 <tbody>
+                    {/* Populate rows using planets from planetList */}
                     {planetList.map(planet => <Planet key={planet.id} planet={planet} />)}
                 </tbody>
             </table>

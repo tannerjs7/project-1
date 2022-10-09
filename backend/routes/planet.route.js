@@ -2,6 +2,7 @@ const { default: mongoose } = require('mongoose')
 const router = require('express').Router()
 const { findAllPlanets, findPlanetById, createPlanet, updatePlanet, deletePlanetById } = require('../controllers/planet.controller.js')
 
+// Middleware to validate planet IDs.
 const validateObjectId = (req, res, next) => {
     if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
         res.status(204).send()
@@ -10,6 +11,7 @@ const validateObjectId = (req, res, next) => {
     }
 }
 
+// Read all planets.
 router.get('/', async (req, res) => {
     try {
         const planets = await findAllPlanets()
@@ -19,6 +21,7 @@ router.get('/', async (req, res) => {
     }
 })
 
+// Read a specific planet.
 router.get('/:id', validateObjectId, async (req, res) => {
     try {
         const planet = await findPlanetById(req.params.id)
@@ -28,6 +31,7 @@ router.get('/:id', validateObjectId, async (req, res) => {
     }
 })
 
+// Create a new planet.
 router.post('/', async (req, res) => {
     try {
         const planet = await createPlanet(req.body)
@@ -37,6 +41,7 @@ router.post('/', async (req, res) => {
     }
 })
 
+// Update a planet.
 router.put('/:id', validateObjectId, async (req, res) => {
     try {
         await updatePlanet(req.params.id, req.body)
@@ -46,6 +51,7 @@ router.put('/:id', validateObjectId, async (req, res) => {
     }
 })
 
+// Delete a planet.
 router.delete('/:id', validateObjectId, async (req, res) => {
     try {
         await deletePlanetById(req.params.id)
