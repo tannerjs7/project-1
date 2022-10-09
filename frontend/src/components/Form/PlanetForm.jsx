@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useState } from 'react'
 
-export const PlanetForm = (props) => {
+export const PlanetForm = props => {
 
     /**
      * Set up state for planet data.
@@ -31,12 +31,13 @@ export const PlanetForm = (props) => {
 
     // Submit new planet and clear form.
     const handleSubmit = async event => {
-        event.preventDefault() // Prevents page from refreshing
+        event.preventDefault()
         try {
             const res = await axios.post('http://localhost:9000/planets', {...planetData, system: props.systemNum})
             props.setPlanetList(p => [...p, res.data])
             event.target.reset()
             handleClear()
+            console.log(123)
         } catch (err) {
             console.error(err)
         }
@@ -80,6 +81,7 @@ export const PlanetForm = (props) => {
                     class="check"
                     id="is-real"
                     type="checkbox"
+                    checked={planetData.isReal}
                     onChange={() => setPlanetData({...planetData, isReal: !planetData.isReal})}
                 />
             </div>

@@ -20,9 +20,9 @@ export const PlanetList = ({systemNum}) => {
 
     const Planet = ({planet: {name, size, info, isReal, imageUrl, _id}}) => {
 
-        // Set up state for planet data
+        // Set up state for planet data.
         const [planetData, setPlanetData] = useState({
-            id: _id,
+            _id: _id,
             name: name,
             size: size,
             info: info,
@@ -30,7 +30,7 @@ export const PlanetList = ({systemNum}) => {
             imageUrl: imageUrl
         })
 
-        // Remove the planet from state and the database
+        // Remove the planet from state and the database.
         const deletePlanet = async planetId => {
             try {
                 await axios.delete(`http://localhost:9000/planets/${planetId}`)
@@ -104,7 +104,7 @@ export const PlanetList = ({systemNum}) => {
                         />
                     </td>
                     <td className="row-item" id="delete-button"><button onClick={() => deletePlanet(_id)}>Delete</button></td>
-                    <td className="row-item" id="edit-button"><button onClick={() => {toggleIsEdit(!isEdit); editPlanet(_id)}}>Submit</button></td>
+                    <td className="row-item" id="edit-button"><button onClick={() => {editPlanet(_id); toggleIsEdit(!isEdit)}}>Submit</button></td>
                 </tr>
             )
         }
@@ -133,8 +133,8 @@ export const PlanetList = ({systemNum}) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* Populate rows using planets from planetList */}
-                    {planetList.map(planet => <Planet key={planet.id} planet={planet} />)}
+                    {/* Populate rows using planets from planetList. */}
+                    {planetList.map(planet => <Planet key={planet._id} planet={planet} />)}
                 </tbody>
             </table>
         </>

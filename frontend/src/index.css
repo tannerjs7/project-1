@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100");
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
 
 /* General */
@@ -28,10 +28,12 @@ img {
 
 h1 {
   font-size: 70px;
+  text-align: center;
 }
 
 h2 {
   font-size: 50px;
+  text-align: center;
 }
 
 button:hover {
@@ -213,10 +215,13 @@ td.text-right {
 .row-item {
 	text-align: center;
   height: 110px;
+  max-height: 110px;
+  overflow: auto;
 }
 
 #name-view {
   width: 10vw;
+  max-width: 10vw;
 }
 
 #size-view {
@@ -225,6 +230,7 @@ td.text-right {
 
 #info-view {
   width: 38vw;
+  max-width: 38vw;
 }
 
 #isReal-view {
